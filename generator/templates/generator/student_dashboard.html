@@ -1,0 +1,14 @@
+{% extends "generator/base.html" %}
+{% block title %}Student Dashboard | CourseGen AI{% endblock %}
+{% block content %}
+<div class="hero"><div><p class="eyebrow">LEARN SMARTER</p><h1>Your learning dashboard</h1><p class="muted">Explore AI-generated notes, summaries and quizzes.</p></div>
+<a class="btn" href="{% url 'generate_content' %}">+ Generate a course</a></div>
+{% if topics %}
+<div class="course-grid">{% for topic in topics %}
+<article class="course-card"><span class="tag">COURSE</span><h2>{{ topic.title }}</h2>
+<p class="muted">Created by {{ topic.teacher.get_full_name|default:topic.teacher.username }}</p>
+<p class="muted">{{ topic.created_at|date:"M d, Y" }}</p>
+<a class="text-link" href="{% url 'view_content' topic.id %}">Open study material →</a></article>
+{% endfor %}</div>
+{% else %}<section class="empty panel"><h2>No courses yet</h2><p class="muted">Generate your first course to create notes, key points and a practice quiz.</p><a class="btn" href="{% url 'generate_content' %}">Create first course</a></section>{% endif %}
+{% endblock %}

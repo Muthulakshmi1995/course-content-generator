@@ -1,0 +1,12 @@
+{% extends "generator/base.html" %}
+{% block title %}Generate Course | CourseGen AI{% endblock %}
+{% block content %}
+<section class="panel narrow"><p class="eyebrow">AI COURSE BUILDER</p><h1>Generate learning material</h1>
+<p class="muted">Enter a topic. Gemini AI will create structured notes, key points, a summary and an MCQ quiz.</p>
+<form method="post">{% csrf_token %}
+<label for="{{ form.title.id_for_label }}">Course topic</label>{{ form.title }}
+{% if form.title.errors %}<div class="field-error">{{ form.title.errors }}</div>{% endif %}
+<button class="btn full" type="submit">Generate course content</button>
+</form>
+<p class="hint">Generation may take a little time depending on the AI service response.</p></section>
+{% endblock %}

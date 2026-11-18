@@ -1,0 +1,50 @@
+
+{% extends "generator/base.html" %}
+
+{% block title %}Login | CourseGen AI{% endblock %}
+
+{% block content %}
+
+<section class="panel narrow">
+
+    <h1>Welcome back</h1>
+
+    <p class="muted">
+        Sign in to view courses or generate study material.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="alert error">
+                Username or password is incorrect.
+            </div>
+        {% endif %}
+
+        <label for="id_username">Username</label>
+        {{ form.username }}
+
+        <label for="id_password">Password</label>
+        {{ form.password }}
+
+        <button class="btn" type="submit">
+            Sign in
+        </button>
+
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <hr>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <p>New Student?</p>
+
+        <a href="{% url 'register' %}" class="btn">
+            Register Here
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

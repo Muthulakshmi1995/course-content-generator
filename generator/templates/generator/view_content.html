@@ -1,0 +1,16 @@
+{% extends "generator/base.html" %}
+{% block title %}{{ topic.title }} | CourseGen AI{% endblock %}
+{% block content %}
+<div class="hero"><div><p class="eyebrow">COURSE MATERIAL</p><h1>{{ topic.title }}</h1><p class="muted">Prepared by {{ topic.teacher.get_full_name|default:topic.teacher.username }}</p></div>
+<a class="btn secondary" href="{% url 'export_pdf' topic.id %}">↓ Download PDF</a></div>
+{% if summary %}<section class="panel"><h2>Course Summary</h2><p class="reading">{{ summary.summary_text|linebreaksbr }}</p></section>{% endif %}
+{% if content %}<section class="panel"><h2>Study Notes</h2><div class="reading">{{ content.notes|linebreaks }}</div></section>
+<section class="panel"><h2>Key Points</h2><ul class="key-list">{% for point in content.key_points.splitlines %}<li>{{ point }}</li>{% empty %}<li>No key points available.</li>{% endfor %}</ul></section>{% endif %}
+{% if quiz %}<section class="panel"><p class="eyebrow">PRACTICE</p><h2>{{ quiz.title }}</h2><p class="muted">{{ quiz.description }}</p>
+<form method="post" action="{% url 'submit_quiz' topic.id %}">{% csrf_token %}
+{% for question in quiz.questions.all %}<fieldset class="question"><legend>{{ forloop.counter }}. {{ question.question_text }}</legend>
+{% for answer in question.answers.all %}<label class="option"><input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}" required> {{ answer.answer_text }}</label>{% endfor %}
+</fieldset>{% endfor %}
+<button class="btn" type="submit">Submit answers</button></form></section>
+{% else %}<section class="panel"><p class="muted">Quiz is not available for this course yet.</p></section>{% endif %}
+{% endblock %}

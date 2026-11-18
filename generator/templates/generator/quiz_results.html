@@ -1,0 +1,11 @@
+{% extends "generator/base.html" %}
+{% block title %}Quiz Results | CourseGen AI{% endblock %}
+{% block content %}
+<section class="result-hero panel"><p class="eyebrow">QUIZ COMPLETED</p><h1>Your result</h1><div class="score">{{ score }} / {{ total }}</div><h2>{{ percentage }}%</h2><p class="muted">You answered {{ score }} out of {{ total }} questions correctly.</p>
+<a class="btn" href="{% url 'view_content' topic.id %}">Back to course</a></section>
+<section class="panel"><h2>Answer review</h2>{% for item in results %}
+<div class="review"><h3>{{ forloop.counter }}. {{ item.question.question_text }}</h3>
+<p class="{% if item.is_correct %}correct{% else %}incorrect{% endif %}">{% if item.is_correct %}Correct{% else %}Incorrect{% endif %}</p>
+<p>Your answer: {{ item.selected.answer_text|default:"Not answered" }}</p><p>Correct answer: <strong>{{ item.correct.answer_text|default:"Not available" }}</strong></p></div>
+{% endfor %}</section>
+{% endblock %}

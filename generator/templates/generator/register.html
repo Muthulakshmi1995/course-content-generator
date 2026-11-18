@@ -1,0 +1,40 @@
+
+{% extends "generator/base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; margin: 40px auto;">
+    <h2>Student Registration</h2>
+    <p>Create your student account to access courses.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div style="margin-bottom: 15px;">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.errors %}
+                    <div style="color: red;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p style="margin-top: 20px;">
+        Already have an account?
+        <a href="{% url 'login' %}">Login here</a>
+    </p>
+</div>
+{% endblock %}
