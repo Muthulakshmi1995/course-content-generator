@@ -82,7 +82,7 @@ LOGOUT_REDIRECT_URL = "login"
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
-GEMINI_TIMEOUT = int(os.getenv("GEMINI_TIMEOUT", "90"))
+GEMINI_TIMEOUT = int(os.getenv("GEMINI_TIMEOUT", "180"))
 
 # Production security settings are activated when DEBUG=False.
 if not DEBUG:
